@@ -6,7 +6,7 @@ import { ShopContext } from '../context/ShopContext';
 const NavBar = () => {
 
     const [visible,setVisible] =useState(false);
-     const { search, setSearch, showSearch, setShowSearch } = useContext(ShopContext)
+     const { getCartCount, setShowSearch ,navigate} = useContext(ShopContext)
   return (
     <div className='flex justify-between p-5 font-medium items-center'>
       <Link to={'/'}><img src={assets.logo} alt="logo" className='w-36 cursor-pointer' /></Link>
@@ -32,7 +32,7 @@ const NavBar = () => {
       <div className='flex items-center gap-6'>
          <img src={assets.search_icon} alt="search_icon" className='w-5 cursor-pointer'onClick={()=>{setShowSearch(true)}}/>
          <div className='group relative'>
-            <img src={assets.profile_icon} alt="profile_icon" className=' cursor-pointer  w-5' />
+            <img src={assets.profile_icon} alt="profile_icon" className=' cursor-pointer  w-5' onClick={()=>navigate('/login')} />
             <div className='absolute pt-4 right-0  hidden  group-hover:block  dropdown-menu '>
                 <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded'>
 
@@ -46,7 +46,7 @@ const NavBar = () => {
 
          <NavLink to='/cart' className='relative '>
               <img src={assets.cart_icon} alt="cart_icon" className='w-5 min-w-5 ' />
-              <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center bg-black text-white aspect-square rounded-full text-xs'>10</p>
+              <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center bg-black text-white aspect-square rounded-full text-xs'>{getCartCount()}</p>
          </NavLink>
          <img src={assets.menu_icon} alt="menu_icon" className='w-5 cursor-pointer sm:hidden  ' onClick={()=>setVisible(true)}/>
       </div>
