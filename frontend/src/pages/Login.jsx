@@ -6,13 +6,17 @@ const Login = () => {
   const [name,setName]=useState('');
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('');
+
+  const submitHandler=async(e)=>{
+    e.preventDefault();
+  }
   return (
     <>
     <div className='flex flex-col gap-3 sm:w-1/2 mx-auto w-full items-center mt-14 mb-40'>
         <h2 className='prata-regular text-3xl font-medium my-2'>{currentState=='Sign Up'?'Sign Up':'Login'}</h2>
-        <input type="text" placeholder='Name' className={`border border-gray-700 px-4 py-2 w-full ${currentState=='Sign Up'?'block':'hidden'}`} value={name} onChange={(e)=>{setName(e.target.value)}}/>
-        <input type="email" placeholder='Email'  className='border border-gray-700 px-4 py-2 w-full' value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
-        <input type="password" placeholder='Password'  className='border border-gray-700 px-4 py-2 w-full' value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
+        <input type="text" placeholder='Name' className={`border border-gray-700 px-4 py-2 w-full ${currentState=='Sign Up'?'block':'hidden'}`} value={name} onChange={(e)=>{setName(e.target.value)}} required/>
+        <input type="email" placeholder='Email'  className='border border-gray-700 px-4 py-2 w-full' value={email} onChange={(e)=>{setEmail(e.target.value)}} required/>
+        <input type="password" placeholder='Password'  className='border border-gray-700 px-4 py-2 w-full' value={password} onChange={(e)=>{setPassword(e.target.value)}} required/>
         <div className='flex justify-between  w-full'>
           {currentState=='Login'?<span className='cursor-pointer  text-medium'>forget password ? </span>:null}
 
