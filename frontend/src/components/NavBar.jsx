@@ -5,8 +5,15 @@ import { ShopContext } from '../context/ShopContext';
 
 const NavBar = () => {
 
+     const logout=()=>{
+          localStorage.removeItem('token'),
+          setToken('')
+          setCartItems({})
+          navigate("/login")
+     }
+
     const [visible,setVisible] =useState(false);
-     const { getCartCount, setShowSearch ,navigate} = useContext(ShopContext)
+     const { getCartCount, setShowSearch ,navigate,setToken,token,setCartItems} = useContext(ShopContext)
   return (
     <div className='flex justify-between p-5 font-medium items-center'>
       <Link to={'/'}><img src={assets.logo} alt="logo" className='w-36 cursor-pointer' /></Link>
@@ -34,12 +41,12 @@ const NavBar = () => {
          <div className='group relative'>
             <img src={assets.profile_icon} alt="profile_icon" className=' cursor-pointer  w-5' onClick={()=>navigate('/login')} />
             <div className='absolute pt-4 right-0  hidden  group-hover:block  dropdown-menu '>
-                <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded'>
+                {token && <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded'>
 
                     <p className='cursor-pointer hover:text-black'>My Profile</p>
-                    <p className='cursor-pointer hover:text-black'>Orders</p>
-                    <p className='cursor-pointer hover:text-black'>Logout</p>
-                </div>
+                    <p onClick={()=>{navigate('/orders')}} className='cursor-pointer hover:text-black'>Orders</p>
+                   { <p className='cursor-pointer hover:text-black' onClick={logout}>Logout</p>}
+                </div>}
             </div>
 
          </div>

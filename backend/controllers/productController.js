@@ -41,9 +41,12 @@ const listProduct =async(req,res) =>{
    try {
     const AllProducts=await Product.find({});
     if(AllProducts.length===0){
-        return res.status(404).json({success:false,message:'No products found!'})
+        return res.status(400).json({success:false,message:'No products found!'})
     };
-    res.status(200).json({success:true,message:'Products fetched successfully ',AllProducts})
+    if(AllProducts.length>0){
+
+        res.status(200).json({success:true,message:'Products fetched successfully ',AllProducts})
+    }
    } catch (error) {
     return res.status(500).json({success:false,message:error.message})
    }

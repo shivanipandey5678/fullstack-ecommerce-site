@@ -1,5 +1,9 @@
 import React,{useState} from 'react'
 import NewsLetterBox from '../components/NewsLetterBox';
+import { useContext } from 'react';
+import { ShopContext } from '../context/ShopContext';
+import { useEffect } from 'react';
+import axios from 'axios'
 
 const Login = () => {
   const [currentState,setCurrentState]=useState('Sign Up');
@@ -7,9 +11,39 @@ const Login = () => {
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('');
 
+  const {token,setToken,backendUrl,navigate}=useContext(ShopContext)
+
   const submitHandler=async(e)=>{
     e.preventDefault();
+    try {
+      if(currentState==='Sign Up'){
+        const response=await axios.post(backendUrl+'/api/user/register',{name,email,password});
+        if(response.data.success){
+          setToken(response.data.token);
+          localStorage.setItem('token',response.data.token)
+           
+        }else{
+          console.log(response.data.message)
+        }
+      }else{
+        const response=await axios.post(backendUrl+'/api/user/login',{email,password});
+        if(response.data.success){
+          setToken(response.data.token);
+          localStorage.setItem('token',response.data.token)
+           
+        }else{
+          console.log(response.data.message)
+        }
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
   }
+  useEffect(()=>{
+     if(token){
+      navigate("/")
+     }
+  },[token])
   return (
     <>
     <div className='flex flex-col gap-3 sm:w-1/2 mx-auto w-full items-center mt-14 mb-40'>
@@ -22,7 +56,7 @@ const Login = () => {
 
           {currentState=='Sign Up'?(<span className='cursor-pointer  text-medium' onClick={()=>{setCurrentState('Login')}}>Login here</span>):(<span className='cursor-pointer  text-medium' onClick={()=>{setCurrentState('Sign Up')}}>Create Account</span>)}
         </div>
-         <button className='bg-black text-white text-sm px-4 py-2 w-1/3 my-2 min-h-12 cursor-pointer'>{currentState=='Sign Up'?'Sign Up':'Login'}</button>
+         <button className='bg-black text-white text-sm px-4 py-2 w-1/3 my-2 min-h-12 cursor-pointer' onClick={submitHandler}>{currentState=='Sign Up'?'Sign Up':'Login'}</button>
     </div>
     <NewsLetterBox/>
     </>
