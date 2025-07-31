@@ -19,7 +19,7 @@ const ShopContextProvider = ({ children }) => {
     const navigate=useNavigate();
     const [token,setToken]=useState('')
 
-    const addToCart = (itemId, size) => {
+    const addToCart = async(itemId, size) => {
 
         if(!size){
             toast.error('please select size first');
@@ -38,6 +38,16 @@ const ShopContextProvider = ({ children }) => {
         }
         console.log(cartData)
         setCartItems(cartData);  
+        if(token){
+          
+            try {
+                 const response=await axios.post(backendUrl +'/api/cart/add',{itemId,size},{headers:{token}});
+                 console.log(token)
+               
+            } catch (error) {
+                toast.error(error.message,"idharhu")
+            }
+        }
     }
 
     const getCartCount=()=>{
@@ -53,6 +63,17 @@ const ShopContextProvider = ({ children }) => {
             }
         }
         return totalCount;
+    }
+
+    const getUserCart = async (req,res) =>{
+        try {
+            const response=await axios.post(backendUrl+'/api/cart/get' ,{},{headers:{token}});
+            if(response.data.success){
+                setCartItems(response.data.cartData)
+            }
+        } catch (error) {
+            toast.error(error.message,"hint:getUserCart")
+        }
     }
 
      function updateQuantityfunction(itemId,size,quantity){

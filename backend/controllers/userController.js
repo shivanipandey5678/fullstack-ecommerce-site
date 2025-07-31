@@ -28,7 +28,7 @@ const loginUser = async (req, res) => {
         res.status(200).json({ success: true, token, message: 'User LoggedIn successfully' })
 
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message })
+        res.status(500).json({ success: false, message: error.message,"hint":'loginUser' })
     
     }
 
@@ -79,7 +79,7 @@ const registerUser = async (req, res) => {
         res.status(200).json({ success: true, token, message: 'User registered successfully' })
 
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message })
+        res.status(500).json({ success: false, message: error.message ,"hint":'registerUser'})
     }
 }
 
@@ -98,7 +98,7 @@ const adminLogin = async (req, res) => {
         res.status(200).json({ success: true, message: 'Admin loggedIn successfully',token })
     
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message })
+        res.status(500).json({ success: false, message: error.message ,"hint":'adminLogin' })
     }
    
 }

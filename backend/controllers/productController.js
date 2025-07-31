@@ -29,7 +29,7 @@ const addProduct =async(req,res) =>{
        await product.save();
        res.status(200).json({success:true,message:'product Added!'})
     } catch (error) {
-        return res.status(500).json({success:false,message:error.message})
+        return res.status(500).json({success:false,message:error.message,"hint":'addProduct'})
     }
     
 
@@ -48,7 +48,7 @@ const listProduct =async(req,res) =>{
         res.status(200).json({success:true,message:'Products fetched successfully ',AllProducts})
     }
    } catch (error) {
-    return res.status(500).json({success:false,message:error.message})
+    return res.status(500).json({success:false,message:error.message,"hint":'listProduct'})
    }
 }
 
@@ -63,7 +63,7 @@ const removeProduct =async(req,res) =>{
         };
         res.status(200).json({success:true,message:'Product Deleted successfully ',productInfo})
     } catch (error) {
-        return res.status(500).json({success:false,message:error.message})
+        return res.status(500).json({success:false,message:error.message,"hint":'removeProduct'})
     }
 }
 
@@ -78,7 +78,7 @@ const singleProduct =async(req,res) =>{
         };
         res.status(200).json({success:true,message:'Product Info fetched ',productInfo})
     } catch (error) {
-        return res.status(500).json({success:false,message:error.message})
+        return res.status(500).json({success:false,message:error.message,"hint":'singleProduct'})
     }
     
 }
